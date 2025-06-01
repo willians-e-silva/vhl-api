@@ -12,10 +12,10 @@ public class EnteDeclaradoUpeMapper {
     public List<Map<String, Object>> filter(List<Map<String, Object>> data) {
         return data.stream().map(item -> {
             Map<String, Object> filtered = new HashMap<>();
-            filtered.put("lei", item.get("lei"));
-            filtered.put("codigoComarca", item.get("cdcomarca"));
-            filtered.put("codigoEntePub", item.get("cdentepub"));
-            filtered.put("nomeComarcaEntidade", item.get("nomeComarcaEntidade"));
+            filtered.put("law", item.get("lei"));
+            filtered.put("codeComarca", item.get("cdcomarca"));
+            filtered.put("codeEntePub", item.get("cdentepub"));
+            filtered.put("name", item.get("nomeComarcaEntidade"));
             return filtered;
         }).collect(Collectors.toList());
     }
