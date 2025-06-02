@@ -4,23 +4,34 @@ services:
   app:
     build: .
     ports:
-      - "8080:8080"
+      - "${APPLICATION_PORT}:${APPLICATION_PORT}"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/meubanco
-      SPRING_DATASOURCE_USERNAME: meuusuario
-      SPRING_DATASOURCE_PASSWORD: minhasenha
+      APPLICATION_PORT: ${APPLICATION_PORT}
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      DATABASE_URL: jdbc:postgresql://db:${DATABASE_PORT}/${DATABASE_DB}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      TJSC_WSDL: ${TJSC_WSDL}
+      TJSC_USER: ${TJSC_USER}
+      TJSC_PASS: ${TJSC_PASS}
 
   db:
     image: postgres:15-alpine
     restart: always
     environment:
-      POSTGRES_DB: meubanco
-      POSTGRES_USER: meuusuario
-      POSTGRES_PASSWORD: minhasenha
+      POSTGRES_DB: ${DATABASE_DB}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
     ports:
-      - "5432:5432"
+      - "${DATABASE_PORT}:${DATABASE_PORT}"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER} -d ${DATABASE_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
       - pgdata:/var/lib/postgresql/data
 

@@ -1,6 +1,7 @@
 package com.vhl_test.willians.controller;
 
 import com.vhl_test.willians.service.EnteDeclaradoUpeService;
+import com.vhl_test.willians.dto.EnteDeclaradoUtilidadePublicaEstadualDTO;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/EntesDeclaradosUPE")
@@ -21,18 +21,18 @@ public class EntesDeclaradosUpeController {
     }
 
     @GetMapping("/getAll")
-    public List<Map<String, Object>> getAllEntesDeclaradosUPE() {
+    public List<EnteDeclaradoUtilidadePublicaEstadualDTO> getAllEntesDeclaradosUPE() {
         return enteDeclaradoUpeService.getAll();
     }
 
     @GetMapping("/search")
-    public List<Map<String, Object>> searchEntesDeclaradosUPE(
+    public List<EnteDeclaradoUtilidadePublicaEstadualDTO> searchEntesDeclaradosUPE(
             @RequestParam String searchText) {
         return enteDeclaradoUpeService.search(searchText);
     }
 
     @GetMapping("/getByCode")
-    public List<Map<String, Object>> getByCodeEntesDeclaradosUPE(
+    public List<EnteDeclaradoUtilidadePublicaEstadualDTO> getByCodeEntesDeclaradosUPE(
             @RequestParam Integer code) {
         return enteDeclaradoUpeService.getByCode(code);
     }

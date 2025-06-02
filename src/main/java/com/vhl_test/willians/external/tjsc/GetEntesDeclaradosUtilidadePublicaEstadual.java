@@ -24,16 +24,16 @@ public class GetEntesDeclaradosUtilidadePublicaEstadual {
             List<Map<String, Object>> result = new ArrayList<>();
             for (EnteDeclaradoUtilidadePublicaEstadual ente : entes) {
                 Map<String, Object> map = new HashMap<>();
-                map.put("codeEntePub", ente.getCdentepub());
-                map.put("name", ente.getNomeComarca());
-                map.put("Law", ente.getNomeEntidade());
+                map.put("code", ente.getCdentepub());
+                map.put("name", ente.getNomeEntidade());
+                map.put("Law", ente.getLei());
                 result.add(map);
             }
 
             return result;
 
         } catch (Exception_Exception e) {
-            throw new RuntimeException("Erro no serviço SOAP TJSC", e);
+            throw new RuntimeException("Error in ", e);
         }
     }
 }
