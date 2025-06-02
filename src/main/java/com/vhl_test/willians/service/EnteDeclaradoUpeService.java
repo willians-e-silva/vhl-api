@@ -1,7 +1,6 @@
 package com.vhl_test.willians.service;
 
-import com.vhl_test.willians.external.tjsc.TjscClient;
-import com.vhl_test.willians.mapper.EnteDeclaradoUpeMapper;
+import com.vhl_test.willians.external.tjsc.GetEntesDeclaradosUtilidadePublicaEstadual;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,17 +9,15 @@ import java.util.stream.Collectors;
 
 @Service
 public class EnteDeclaradoUpeService {
-    private final TjscClient tjscClient;
-    private final EnteDeclaradoUpeMapper enteDeclaradoUpeMapper;
+    private final GetEntesDeclaradosUtilidadePublicaEstadual getEntesDeclaradosUtilidadePublicaEstadual;
 
-    public EnteDeclaradoUpeService(TjscClient tjscClient, EnteDeclaradoUpeMapper enteDeclaradoUpeMapper) {
-        this.tjscClient = tjscClient;
-        this.enteDeclaradoUpeMapper = enteDeclaradoUpeMapper;
+    public EnteDeclaradoUpeService(GetEntesDeclaradosUtilidadePublicaEstadual getEntesDeclaradosUtilidadePublicaEstadual) {
+        this.getEntesDeclaradosUtilidadePublicaEstadual = getEntesDeclaradosUtilidadePublicaEstadual;
     }
 
     private List<Map<String, Object>> loadEnteDeclaradoUpeData() {
-        List<Map<String, Object>> entesDeclaradosData = tjscClient.getEntesDeclaradosUtilidadePublicaEstadual();
-        return enteDeclaradoUpeMapper.filter(entesDeclaradosData);
+        List<Map<String, Object>> entesDeclaradosData = getEntesDeclaradosUtilidadePublicaEstadual.loadData();
+        return entesDeclaradosData;
     }
 
     public List<Map<String, Object>> getAll() {
@@ -46,9 +43,25 @@ public class EnteDeclaradoUpeService {
         return response.stream()
                 .filter(item -> {
                     Object itemCodeObj = item.get("codeEntePub");
-                    int itemCode = (Integer) itemCodeObj;
-                    return itemCode == code;
+
+                    if (itemCodeObj == null) return false;
+
+                    try {
+                        if (itemCodeObj instanceof String) {
+                            int itemCode = Integer.parseInt(((String) itemCodeObj).trim());
+                            return itemCode == code;
+                        } else if (itemCodeObj instanceof Number) {
+                            return ((Number) itemCodeObj).intValue() == code;
+                        } else {
+                            System.out.println("Tipo não esperado: " + itemCodeObj.getClass());
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    return false;
                 })
                 .collect(Collectors.toList());
     }
+
 }
