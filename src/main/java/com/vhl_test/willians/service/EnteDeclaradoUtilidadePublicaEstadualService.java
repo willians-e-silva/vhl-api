@@ -12,13 +12,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
-public class EnteDeclaradoUpeService {
+public class EnteDeclaradoUtilidadePublicaEstadualService {
     private final EnteDeclaradoUtilidadePublicaEstadualRepository repository;
     private final EnteDeclaradoUtilidadePublicaEstadualMapper mapper;
 
-    public EnteDeclaradoUpeService(
+    public EnteDeclaradoUtilidadePublicaEstadualService(
             EnteDeclaradoUtilidadePublicaEstadualRepository repository,
             EnteDeclaradoUtilidadePublicaEstadualMapper mapper
     ) {
@@ -31,7 +32,7 @@ public class EnteDeclaradoUpeService {
             Page<EnteDeclaradoUtilidadePublicaEstadual> entities = repository.findAll(pageable);
             return entities.map(mapper::toDto).getContent();
         } catch (Exception error) {
-            throw new ServiceException("Error fetching all entities", error);
+            throw new ServiceException("Error fetching all entities: ", error);
         }
     }
 
@@ -61,6 +62,18 @@ public class EnteDeclaradoUpeService {
             throw error;
         } catch (Exception error) {
             throw new ServiceException("Error fetching entity with code: " + code, error);
+        }
+    }
+
+    public EnteDeclaradoUtilidadePublicaEstadualDTO getById(UUID id) {
+        try {
+            return repository.findById(id)
+                    .map(mapper::toDto)
+                    .orElseThrow(() -> new EntityNotFoundException("No entities found matching uuid: " + id));
+        } catch (EntityNotFoundException error) {
+            throw error;
+        } catch (Exception error) {
+            throw new ServiceException("Error fetching entity with id: " + id, error);
         }
     }
 }
