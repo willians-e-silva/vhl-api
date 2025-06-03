@@ -156,7 +156,6 @@ Como o documento não menciona banco de dados, assumiu-se que o "ID" refere-se a
 
 * * *
 
-* * *
 
 🔍 Sobre o id
 --------------------
