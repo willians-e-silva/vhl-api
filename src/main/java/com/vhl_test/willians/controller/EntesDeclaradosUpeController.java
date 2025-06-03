@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.web.PageableDefault;
 
 import java.util.List;
 
@@ -21,18 +24,20 @@ public class EntesDeclaradosUpeController {
     }
 
     @GetMapping("/getAll")
-    public List<EnteDeclaradoUtilidadePublicaEstadualDTO> getAllEntesDeclaradosUPE() {
-        return enteDeclaradoUpeService.getAll();
+    public List<EnteDeclaradoUtilidadePublicaEstadualDTO> getAllEntesDeclaradosUPE(
+            @PageableDefault(size = 10) Pageable pageable) {
+        return enteDeclaradoUpeService.getAll(pageable);
     }
 
     @GetMapping("/search")
     public List<EnteDeclaradoUtilidadePublicaEstadualDTO> searchEntesDeclaradosUPE(
-            @RequestParam String searchText) {
-        return enteDeclaradoUpeService.search(searchText);
+            @RequestParam String searchText,
+            @PageableDefault(size = 10) Pageable pageable) {
+        return enteDeclaradoUpeService.search(searchText, pageable);
     }
 
     @GetMapping("/getByCode")
-    public List<EnteDeclaradoUtilidadePublicaEstadualDTO> getByCodeEntesDeclaradosUPE(
+    public EnteDeclaradoUtilidadePublicaEstadualDTO getByCodeEntesDeclaradosUPE(
             @RequestParam Integer code) {
         return enteDeclaradoUpeService.getByCode(code);
     }

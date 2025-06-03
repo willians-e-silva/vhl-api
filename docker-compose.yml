@@ -11,15 +11,15 @@ services:
     environment:
       APPLICATION_PORT: ${APPLICATION_PORT}
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
-      DATABASE_URL: jdbc:postgresql://db:${DATABASE_PORT}/${DATABASE_DB}
-      DATABASE_USER: ${DATABASE_USER}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:${DATABASE_PORT}/${DATABASE_DB}
+      SPRING_DATASOURCE_USERNAME: ${DATABASE_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD}
       TJSC_WSDL: ${TJSC_WSDL}
       TJSC_USER: ${TJSC_USER}
       TJSC_PASS: ${TJSC_PASS}
 
   db:
-    image: postgres:15-alpine
+    image: postgres:17-alpine
     restart: always
     environment:
       POSTGRES_DB: ${DATABASE_DB}
