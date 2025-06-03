@@ -95,7 +95,7 @@ Você pode iniciar o projeto de três maneiras diferentes:
 📚 Documentação Swagger
 -----------------------
 
-A API possui uma interface interativa de documentação via Swagger, acessível em:
+Após iniciar a API será disponibilizado uma interface interativa de documentação via Swagger, acessível em:
 
 > [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 
